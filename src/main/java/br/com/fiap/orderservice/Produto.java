@@ -10,4 +10,5 @@ import lombok.*;
 public class Produto {
     private String codigo;
     private String descricao;
+    private float valorUnitario;
 }

@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Item {
     private Produto produto;
-    private float valorUnitario;
     private int quantidade;
     
     public boolean equals(Object obj) {

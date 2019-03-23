@@ -1,7 +1,7 @@
 package br.com.fiap.orderservice;
 
 import lombok.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,7 +12,8 @@ import java.util.List;
 public class Order {
 
     private Person pessoa;
-    private List<Item> itens;
+    private int idOrder;
+    private List<Item> itens = new ArrayList<Item>();
     private float valorTotal;
     private String formaPagamento;
     private String dataCriacaoPedido;
@@ -21,28 +22,22 @@ public class Order {
     public float getValorTotal(){
     	valorTotal = 0;
         for(Item item : itens){
-        	valorTotal += item.getQuantidade() * item.getValorUnitario();
+        	valorTotal += item.getQuantidade() * item.getProduto().getValorUnitario();
         }
         return valorTotal;
     }
     
-    public void adicionarItem(Produto produto, float valorUnitario, int quantidade) {
+    public void adicionarItem(Produto produto, int quantidade) {
 
 		boolean exists = false;
-		Item item = new Item(produto, valorUnitario, quantidade);
+		Item item = new Item(produto, quantidade);
 		try {
 			for (Item i : itens) {
 				//verifica se o item existe na lista
 				if(i.equals(item)) {
-					exists = true;
-					
+					exists = true;	
 					//atualiza a quantidade
 					i.setQuantidade(i.getQuantidade() + quantidade);
-
-					//atualiza o valor se for diferente
-					if(i.getValorUnitario() != valorUnitario) {
-						i.setValorUnitario(valorUnitario);
-					}
 				}
 			}
 			if(!exists) {

@@ -9,18 +9,15 @@ public class OrderServiceApplication {
 	public static void main(String[] args) {
 		
 		Person pess1 = new Person("Joao Victor de Souza", "joaovictor.souz@gmail.com", "Rua Nebraska 246");
-		Produto p1 = new Produto("A1", "Produto A1");		
-		Produto p2 = new Produto("B2", "Produto B2");
+		Produto p1 = new Produto("A1", "Produto A1", 90);		
+		Produto p2 = new Produto("B2", "Produto B2", 72);
 		Order order1 = new Order();
 		
-		order1.adicionarItem(p1, 56, 2);
-		order1.adicionarItem(p2, 92, 7);
-		
-		
+		order1.setIdOrder(1);
+		order1.adicionarItem(p1, 2);
+		order1.adicionarItem(p2, 7);
+		OrderFactory.criarPedido(order1);
 
-		
-		
-		
 		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
