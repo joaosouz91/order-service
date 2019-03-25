@@ -2,7 +2,7 @@ package br.com.fiap.orderservice;
 
 import br.com.fiap.orderservice.enums.BandeiraCartao;
 import br.com.fiap.orderservice.enums.FormaPagamento;
-import br.com.fiap.orderservice.enums.StatusPagamentoCartao;
+import br.com.fiap.orderservice.enums.StatusPagamento;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,12 +19,12 @@ public class Pagamento {
 	private String validadeCartao;
 	private BandeiraCartao bandeiraCartao;
 	private long idTransacao;
-	private StatusPagamentoCartao statusPagamentoCartao;
+	private StatusPagamento statusPagamento;
 
 	public Pagamento(FormaPagamento formaPagamento){
 		this.formaPagamento = formaPagamento;
 		if(formaPagamento.equals(FormaPagamento.CREDITO) || formaPagamento.equals(FormaPagamento.CREDITO)) {
-			statusPagamentoCartao = StatusPagamentoCartao.WAITING;
+			statusPagamento = StatusPagamento.WAITING;
 		}
 	}
 

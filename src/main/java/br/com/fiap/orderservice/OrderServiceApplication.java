@@ -17,8 +17,7 @@ public class OrderServiceApplication {
 		Produto p1 = new Produto("A1", "Produto A1", 90);		
 		Produto p2 = new Produto("B2", "Produto B2", 72);
 		
-		Pagamento pgmt = new Pagamento();
-		pgmt.setFormaPagamento(FormaPagamento.CREDITO);
+		Pagamento pgmt = new Pagamento(FormaPagamento.CREDITO);
 		pgmt.setBandeiraCartao(BandeiraCartao.MASTERCARD);
 		pgmt.setValidadeCartao("2027-03");
 		pgmt.setNumeroCartao("1234 2343 3422 3213");

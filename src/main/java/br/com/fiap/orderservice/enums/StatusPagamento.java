@@ -1,6 +1,6 @@
 package br.com.fiap.orderservice.enums;
 
-public enum StatusPagamentoCartao {
+public enum StatusPagamento {
 	ACCEPTED,
 	DECLINED,
 	WAITING,
