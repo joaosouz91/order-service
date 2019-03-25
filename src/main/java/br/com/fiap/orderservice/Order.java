@@ -1,8 +1,15 @@
 package br.com.fiap.orderservice;
 
-import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.fiap.orderservice.enums.FormaPagamento;
+import br.com.fiap.orderservice.enums.OrderStatus;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -11,13 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 public class Order {
 
-    private Person pessoa;
-    private int idOrder;
+	private int idOrder;
+	private Person pessoa;
     private List<Item> itens = new ArrayList<Item>();
     private float valorTotal;
-    private String formaPagamento;
+    private Pagamento pagamento;
     private String dataCriacaoPedido;
-    private String status;
+    private OrderStatus status;
 
     public float getValorTotal(){
     	valorTotal = 0;
@@ -50,4 +57,19 @@ public class Order {
 		}
 		
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (idOrder != other.idOrder)
+			return false;
+		return true;
+	}
+
 }

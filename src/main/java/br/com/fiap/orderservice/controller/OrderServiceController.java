@@ -23,51 +23,52 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/order-service")
 public class OrderServiceController {
 	
-    @GetMapping("/{idPedido}")
-    public ResponseEntity getOrderById(@PathVariable(value="idPedido", required=true) int idOrder) {
-        System.out.println("idOrder: " + idOrder);
+    @GetMapping("/{idOrder}")
+    public ResponseEntity getOrderById(@PathVariable(value="idOrder", required=true) int idOrder) {
         Order order = OrderFactory.findOrderById(idOrder);
-        System.out.println(order.getIdOrder());
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        if(order != null) {
+            return new ResponseEntity<>(order, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping
     public ResponseEntity<String> create(@RequestBody Order order) {
     	
-    	OrderFactory.criarPedido(order);
+    	if(OrderFactory.create(order)) {
+    		URI location = ServletUriComponentsBuilder
+       			 .fromCurrentRequest()
+       			 .path("/{idOrder}")
+       			 .buildAndExpand(order.getIdOrder()).toUri();
+    		return ResponseEntity.created(location).build();
+    	}
+    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	
-    	URI location = ServletUriComponentsBuilder
-    			 .fromCurrentRequest()
-    			 .path("/{idOrder}")
-    			 .buildAndExpand(order.getIdOrder()).toUri();
-
-    	return ResponseEntity.created(location).build();
     }
     
     @PutMapping
-    public ResponseEntity<String> updateOrder(@RequestBody Order order) {
+    public ResponseEntity<String> update(@RequestBody Order order) {
     	
-    	Order order1 = order;
-    	OrderFactory.updatePedido(order1);
+    	order = OrderFactory.update(order);
     	
-    	URI location = ServletUriComponentsBuilder
-    			 .fromCurrentRequest()
-    			 .path("/{idOrder}")
-    			 .buildAndExpand(order1.getIdOrder()).toUri();
-    	return ResponseEntity.created(location).build();
+    	if(order != null) {
+    		URI location = ServletUriComponentsBuilder
+       			 .fromCurrentRequest()
+       			 .path("/{idOrder}")
+       			 .buildAndExpand(order.getIdOrder()).toUri();
+    		return ResponseEntity.created(location).build();
+    	}
+    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	
     }
     
-    @DeleteMapping
-    public ResponseEntity<String> deleteOrder(@RequestBody Order order) {
+    @DeleteMapping("{idOrder}")
+    public ResponseEntity<String> delete(@PathVariable(value="idOrder", required=true) int idOrder) {
     	
-    	Order order1 = order;
-    	OrderFactory.deletePedido(order1);
-    	
-    	URI location = ServletUriComponentsBuilder
-    			 .fromCurrentRequest()
-    			 .path("/{idOrder}")
-    			 .buildAndExpand(order1.getIdOrder()).toUri();
-    	return ResponseEntity.created(location).build();
+    	if(OrderFactory.delete(idOrder)) {
+    		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    	}
+    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }    
     
 }
