@@ -1,10 +1,12 @@
 package br.com.fiap.orderservice;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.orderservice.enums.FormaPagamento;
 import br.com.fiap.orderservice.enums.OrderStatus;
+import br.com.fiap.orderservice.utils.Util;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,17 +23,17 @@ public class Order {
 	private int idOrder;
 	private Person pessoa;
     private List<Item> itens = new ArrayList<Item>();
-    private float valorTotal;
+    private BigDecimal valorTotal;
     private Pagamento pagamento;
     private String dataCriacaoPedido;
     private OrderStatus status;
 
-    public float getValorTotal(){
-    	valorTotal = 0;
+    public BigDecimal getValorTotal(){
+    	valorTotal = BigDecimal.ZERO;
         for(Item item : itens){
-        	valorTotal += item.getQuantidade() * item.getProduto().getValorUnitario();
+        	valorTotal = valorTotal.add(item.getProduto().getValorUnitario().multiply(new BigDecimal(item.getQuantidade())));
         }
-        return valorTotal;
+        return Util.arredondar(valorTotal);
     }
     
     public void adicionarItem(Produto produto, int quantidade) {

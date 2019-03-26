@@ -21,11 +21,8 @@ public class Pagamento {
 	private long idTransacao;
 	private StatusPagamento statusPagamento;
 
-	public Pagamento(FormaPagamento formaPagamento){
-		this.formaPagamento = formaPagamento;
-		if(formaPagamento.equals(FormaPagamento.CREDITO) || formaPagamento.equals(FormaPagamento.CREDITO)) {
-			statusPagamento = StatusPagamento.WAITING;
-		}
+	public Pagamento(){
+		statusPagamento = StatusPagamento.WAITING;
 	}
 
 }

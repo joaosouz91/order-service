@@ -1,5 +1,7 @@
 package br.com.fiap.orderservice;
 
+import java.math.BigDecimal;
+
 import lombok.*;
 
 @Getter
@@ -10,5 +12,5 @@ import lombok.*;
 public class Produto {
     private String codigo;
     private String descricao;
-    private float valorUnitario;
+    private BigDecimal valorUnitario;
 }

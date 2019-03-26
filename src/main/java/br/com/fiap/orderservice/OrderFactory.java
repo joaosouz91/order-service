@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import br.com.fiap.orderservice.enums.FormaPagamento;
 import br.com.fiap.orderservice.enums.OrderStatus;
 import br.com.fiap.orderservice.enums.StatusPagamento;
 
@@ -19,7 +18,6 @@ public class OrderFactory {
     
     public static boolean create(Order order) {
     	if(!orderList.isEmpty()) {
-    		//Order maxOrder = Collections.max(orderList, Comparator.comparing(v -> v.getIdOrder()));
     		order.getPagamento().setIdTransacao(getNewIdTransacao());
     		order.setIdOrder(getNewIdOrder());
     	} else {
@@ -36,15 +34,15 @@ public class OrderFactory {
     		if(or.getIdOrder() == order.getIdOrder()) {
     			or.setItens(order.getItens());
     			or.setPessoa(order.getPessoa());
-    			or.setStatus(order.getStatus());
     			or.setDataCriacaoPedido(order.getDataCriacaoPedido());
     			
     			//só posso mudar o pagamento se o pagamento nao foi autorizado ainda    			
 				if(!or.getPagamento().getStatusPagamento().equals(StatusPagamento.ACCEPTED)) {
-					or.getPagamento().setIdTransacao(getNewIdTransacao());
+					long idTransacao = getNewIdTransacao();
 					or.setPagamento(order.getPagamento());
+					or.getPagamento().setIdTransacao(idTransacao);
 				}
-    			return or;
+    			return or;		
     		}
     	}
 		return null;
@@ -70,6 +68,7 @@ public class OrderFactory {
 	
 	public static long getNewIdTransacao() {
     	Order maxOrder = Collections.max(orderList, Comparator.comparing(v -> v.getIdOrder()));
+    	//long idTransacao = maxOrder.getPagamento().getIdTransacao() + 1;
     	return maxOrder.getPagamento().getIdTransacao() + 1;
     }
 	
