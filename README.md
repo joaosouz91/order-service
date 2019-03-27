@@ -34,8 +34,7 @@ http://localhost:8080/order-service/
         "validadeCartao": "2027-03",
         "bandeiraCartao": "MASTERCARD"
     },
-    "dataCriacaoPedido": "2019-03-01 23:43:49.767",
-    "status": "PENDING"
+    "dataCriacaoPedido": "2019-03-01 23:43:49.767"
 }
 
 -------------------------------------------------------
