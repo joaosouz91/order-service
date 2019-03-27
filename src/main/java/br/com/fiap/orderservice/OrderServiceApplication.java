@@ -3,10 +3,6 @@ package br.com.fiap.orderservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.fiap.orderservice.enums.BandeiraCartao;
-import br.com.fiap.orderservice.enums.FormaPagamento;
-import br.com.fiap.orderservice.enums.OrderStatus;
-
 @SpringBootApplication
 public class OrderServiceApplication {
 

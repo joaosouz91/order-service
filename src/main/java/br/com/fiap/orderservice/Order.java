@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.orderservice.enums.FormaPagamento;
 import br.com.fiap.orderservice.enums.OrderStatus;
 import br.com.fiap.orderservice.utils.Util;
 import lombok.AllArgsConstructor;
@@ -36,6 +35,11 @@ public class Order {
         return Util.arredondar(valorTotal);
     }
     
+    public void setValorTotal(BigDecimal valorTotal) {
+    	System.out.println("passou pelo set");
+		this.valorTotal = valorTotal;
+	}
+    
     public void adicionarItem(Produto produto, int quantidade) {
 
 		boolean exists = false;
@@ -57,7 +61,6 @@ public class Order {
 		}catch(Exception e) {
 			System.out.println("=== Não foi possível adicionar o item ao carrinho ===");
 		}
-		
     }
 
 	@Override
