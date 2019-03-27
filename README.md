@@ -1,8 +1,8 @@
 # order-service
 
 -------------------------------------------------------
-POST
-http://localhost:8080/order-service/
+# POST
+# http://localhost:8080/order-service/
 
 {
     "pessoa": {
@@ -38,8 +38,8 @@ http://localhost:8080/order-service/
 }
 
 -------------------------------------------------------
-PUT
-http://localhost:8080/order-service/
+# PUT
+# http://localhost:8080/order-service/
 
 {
 	"idOrder": {idOrder},
@@ -68,9 +68,9 @@ http://localhost:8080/order-service/
 }
 
 -------------------------------------------------------
-GET
-http://localhost:8080/order-service/{idOrder}
+# GET
+# http://localhost:8080/order-service/{idOrder}
 -------------------------------------------------------
-DELETE
-http://localhost:8080/order-service/{idOrder}
+# DELETE
+# http://localhost:8080/order-service/{idOrder}
 -------------------------------------------------------
