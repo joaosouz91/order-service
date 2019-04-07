@@ -16,6 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.fiap.orderservice.Order;
 import br.com.fiap.orderservice.OrderFactory;
+import br.com.fiap.orderservice.exception.OrderNotFoundException;
+import br.com.fiap.orderservice.exception.ServerException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,12 +26,19 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderServiceController {
 	
     @GetMapping("/{idOrder}")
-    public ResponseEntity getOrderById(@PathVariable(value="idOrder", required=true) int idOrder) {
-        Order order = OrderFactory.findOrderById(idOrder);
-        if(order != null) {
-            return new ResponseEntity<>(order, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity getOrderById(@PathVariable(value="idOrder", required=true) Integer idOrder) throws OrderNotFoundException, ServerException {
+
+    	try {
+    		Order order = OrderFactory.findOrderById(idOrder);
+        	if(order != null) {
+                return new ResponseEntity<>(order, HttpStatus.OK);
+            } else {
+            	String[] params = {"idOrder", Integer.toString(idOrder)};
+                throw new OrderNotFoundException(Order.class, params);
+            }
+		} catch (Exception e) {
+			throw new ServerException();
+		}
     }
 
     @PostMapping
@@ -43,23 +52,27 @@ public class OrderServiceController {
     		return ResponseEntity.created(location).build();
     	}
     	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	
     }
     
     @PutMapping
-    public ResponseEntity<String> update(@RequestBody Order order) {
+    public ResponseEntity<String> update(@RequestBody Order order) throws OrderNotFoundException, ServerException {
     	
-    	order = OrderFactory.update(order);
-    	
-    	if(order != null) {
-    		URI location = ServletUriComponentsBuilder
-       			 .fromCurrentRequest()
-       			 .path("/{idOrder}")
-       			 .buildAndExpand(order.getIdOrder()).toUri();
-    		return ResponseEntity.created(location).build();
-    	}
-    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	
+    	try {
+    		int idOrder = order.getIdOrder();
+    		order = OrderFactory.update(order);
+    		if(order != null) {
+        		URI location = ServletUriComponentsBuilder
+           			 .fromCurrentRequest()
+           			 .path("/{idOrder}")
+           			 .buildAndExpand(order.getIdOrder()).toUri();
+        		return ResponseEntity.created(location).build();
+        	}else {
+            	String[] params = {"idOrder", Integer.toString(idOrder)};
+                throw new OrderNotFoundException(Order.class, params);
+            }
+		} catch (Exception e) {
+			throw new ServerException();
+		}
     }
     
     @DeleteMapping("{idOrder}")
